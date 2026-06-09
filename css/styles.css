@@ -126,6 +126,8 @@ ul.picklog .pn { color: var(--muted); margin-right: 6px; }
 .tcell.away { text-align: right; }
 .tcell .towner { font-size: 11px; color: var(--gold); }
 .score { display: flex; align-items: center; gap: 6px; }
+.score.readonly { min-width: 56px; justify-content: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.score.readonly .vs { color: var(--muted); font-weight: 400; }
 .match .winner { max-width: 130px; }
 .match .clear { background: transparent; color: var(--muted); padding: 4px 8px; }
 .hres { font-size: 12px; font-weight: 600; }

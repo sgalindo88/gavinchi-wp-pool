@@ -1,5 +1,5 @@
 import { api } from './api.js';
-import { refresh, ensurePassword } from './state.js';
+import { refresh, ensurePassword, adminUnlocked } from './state.js';
 import { escapeHtml } from './leaderboard.js';
 
 const STAGE_LABEL = {
@@ -42,6 +42,8 @@ export function renderFixtures(state) {
   const el = document.createElement('div');
   el.className = 'fixtures-view';
 
+  const admin = adminUnlocked(); // only admins see the editing controls
+
   const matches = (state.matches || []).slice().sort((a, b) => {
     const d = String(a.KickoffDate).localeCompare(String(b.KickoffDate));
     return d !== 0 ? d : String(a.MatchId).localeCompare(String(b.MatchId));
@@ -60,22 +62,33 @@ export function renderFixtures(state) {
       const stage = STAGE_LABEL[m.Stage] || m.Stage;
       const tag = m.Stage === 'group' ? `${stage} ${m.GroupLetter}` : stage;
       const isKO = m.Stage !== 'group';
+      const scoreCell = admin
+        ? `<div class="score">
+             <input type="number" min="0" class="sh" value="${isFinal ? Number(m.HomeScore) : ''}" />
+             <span>–</span>
+             <input type="number" min="0" class="sa" value="${isFinal ? Number(m.AwayScore) : ''}" />
+           </div>`
+        : `<div class="score readonly">${isFinal ? `${Number(m.HomeScore)} – ${Number(m.AwayScore)}` : '<span class="vs">vs</span>'}</div>`;
+
+      const winnerSel = (admin && isKO)
+        ? `<select class="winner" title="Winner if tied (knockouts)">
+             <option value="">winner…</option>
+             <option value="${m.HomeTeamId}" ${String(m.WinnerTeamId) === String(m.HomeTeamId) ? 'selected' : ''}>${escapeHtml(state.teamsById[String(m.HomeTeamId)]?.Name || m.HomeTeamId)}</option>
+             <option value="${m.AwayTeamId}" ${String(m.WinnerTeamId) === String(m.AwayTeamId) ? 'selected' : ''}>${escapeHtml(state.teamsById[String(m.AwayTeamId)]?.Name || m.AwayTeamId)}</option>
+           </select>`
+        : '';
+
+      const buttons = admin
+        ? `<button class="save" data-save>Save</button>${isFinal ? '<button class="clear" data-clear>✕</button>' : ''}`
+        : '';
+
       return `<div class="match" data-mid="${escapeHtml(String(m.MatchId))}">
         <span class="mtag">${escapeHtml(tag)}</span>
         ${teamCell(state, m.HomeTeamId, 'home')}
-        <div class="score">
-          <input type="number" min="0" class="sh" value="${isFinal ? Number(m.HomeScore) : ''}" />
-          <span>–</span>
-          <input type="number" min="0" class="sa" value="${isFinal ? Number(m.AwayScore) : ''}" />
-        </div>
+        ${scoreCell}
         ${teamCell(state, m.AwayTeamId, 'away')}
-        ${isKO ? `<select class="winner" title="Winner if tied (knockouts)">
-            <option value="">winner…</option>
-            <option value="${m.HomeTeamId}" ${String(m.WinnerTeamId) === String(m.HomeTeamId) ? 'selected' : ''}>${escapeHtml(state.teamsById[String(m.HomeTeamId)]?.Name || m.HomeTeamId)}</option>
-            <option value="${m.AwayTeamId}" ${String(m.WinnerTeamId) === String(m.AwayTeamId) ? 'selected' : ''}>${escapeHtml(state.teamsById[String(m.AwayTeamId)]?.Name || m.AwayTeamId)}</option>
-          </select>` : ''}
-        <button class="save" data-save>Save</button>
-        ${isFinal ? `<button class="clear" data-clear>✕</button>` : ''}
+        ${winnerSel}
+        ${buttons}
         ${resultSummary(state, m)}
       </div>`;
     }).join('');
@@ -88,10 +101,11 @@ export function renderFixtures(state) {
     .map((t) => `<option value="${t.TeamId}">${escapeHtml(`${t.FlagEmoji || ''} ${t.Name} (${t.GroupLetter})`)}</option>`).join('');
   const stageOpts = KO_STAGES.map((s) => `<option value="${s}">${STAGE_LABEL[s]}</option>`).join('');
 
-  el.innerHTML = `
-    <h2>Fixtures &amp; Results</h2>
-    <p class="muted">Enter scores as matches finish. For a tied knockout, also choose the team that advanced.</p>
-    ${sections || '<p class="muted">No matches loaded. Seed the sheet from the Admin panel.</p>'}
+  const intro = admin
+    ? 'Enter scores as matches finish. For a tied knockout, also choose the team that advanced.'
+    : 'Results update live. Only the admin can enter scores.';
+
+  const koForm = admin ? `
     <div class="ko-add">
       <h3>Add a knockout match</h3>
       <div class="ko-form">
@@ -102,7 +116,13 @@ export function renderFixtures(state) {
         <input id="ko-date" type="date" />
         <button data-ko-add>Add match</button>
       </div>
-    </div>`;
+    </div>` : '';
+
+  el.innerHTML = `
+    <h2>Fixtures &amp; Results</h2>
+    <p class="muted">${intro}</p>
+    ${sections || '<p class="muted">No matches loaded. Seed the sheet from the Admin panel.</p>'}
+    ${koForm}`;
 
   // --- Wiring ---
   el.addEventListener('click', async (e) => {
