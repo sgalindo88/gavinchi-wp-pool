@@ -47,18 +47,35 @@ function renderStatus() {
   }
 }
 
+// Signature of the data that views actually depend on. Used to skip needless
+// re-renders during polling so typed-in form fields aren't wiped every tick.
+function signature(s) {
+  if (!s) return '';
+  return JSON.stringify({
+    d: s.draftStatus, c: s.currentPickNumber,
+    p: s.participants, k: s.picks, m: s.matches,
+  });
+}
+
+let lastSig = null;
+
 tabsEl.addEventListener('click', (e) => {
   const btn = e.target.closest('[data-view]');
   if (!btn) return;
   active = btn.getAttribute('data-view');
   location.hash = active;
   renderTabs();
+  lastSig = signature(window.__state);
   renderContent(window.__state);
 });
 
 subscribe((state) => {
   window.__state = state;
-  renderContent(state);
+  const sig = signature(state);
+  if (sig !== lastSig) {
+    lastSig = sig;
+    renderContent(state); // only re-render when the data changed
+  }
   renderStatus();
 });
 
