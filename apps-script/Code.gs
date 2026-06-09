@@ -80,14 +80,16 @@ function jsonOut(obj) {
 // ---------------------------------------------------------------------------
 
 function getState() {
-  var teams = readObjects(SHEETS.TEAMS);
-  var participants = readObjects(SHEETS.PARTICIPANTS)
+  // Tolerant of a not-yet-seeded sheet so the app loads and the Admin tab works.
+  var teams = readObjectsSafe(SHEETS.TEAMS);
+  var participants = readObjectsSafe(SHEETS.PARTICIPANTS)
     .sort(function (a, b) { return Number(a.DraftSlot) - Number(b.DraftSlot); });
-  var picks = readObjects(SHEETS.PICKS)
+  var picks = readObjectsSafe(SHEETS.PICKS)
     .sort(function (a, b) { return Number(a.PickNumber) - Number(b.PickNumber); });
-  var matches = readObjects(SHEETS.MATCHES);
+  var matches = readObjectsSafe(SHEETS.MATCHES);
   var config = readConfig();
 
+  var seeded = teams.length > 0;
   var draftStatus = config.draftStatus || 'not_started';
   var currentPickNumber = Number(config.currentPickNumber || 0);
 
@@ -106,6 +108,7 @@ function getState() {
 
   return {
     ok: true,
+    seeded: seeded,
     draftStatus: draftStatus,
     currentPickNumber: currentPickNumber,
     totalPicks: TOTAL_PICKS,
@@ -389,7 +392,17 @@ function addKnockoutMatch(params) {
  * Config value `dataBaseUrl` if not supplied.
  */
 function setupSheet(params) {
-  requireAdmin(params);
+  // Bootstrap-aware auth: on the very first run no password exists yet, so the
+  // password supplied here BECOMES the admin password. On later runs it must match.
+  var bootCfg = readConfig();
+  var existingPw = String(bootCfg.adminPassword || '');
+  if (existingPw && String((params && params.password) || '') !== existingPw) {
+    return { ok: false, error: 'Wrong admin password.' };
+  }
+  if (!String((params && params.password) || '')) {
+    return { ok: false, error: 'Provide a password — it becomes the admin password on first setup.' };
+  }
+
   ensureSheet(SHEETS.CONFIG, ['Key', 'Value']);
   ensureSheet(SHEETS.TEAMS, ['TeamId', 'Name', 'GroupLetter', 'FlagEmoji']);
   ensureSheet(SHEETS.PARTICIPANTS, ['PlayerId', 'Name', 'DraftSlot']);
@@ -478,6 +491,12 @@ function readObjects(name) {
     out.push(obj);
   }
   return out;
+}
+
+/** Like readObjects but returns [] if the tab doesn't exist yet (pre-seed). */
+function readObjectsSafe(name) {
+  if (!ss().getSheetByName(name)) return [];
+  return readObjects(name);
 }
 
 function appendRow(name, obj) {
