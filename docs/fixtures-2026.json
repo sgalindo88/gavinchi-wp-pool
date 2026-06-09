@@ -1,0 +1,81 @@
+[
+  { "id": "M01", "stage": "group", "group": "A", "date": "2026-06-11", "home": "MEX", "away": "RSA" },
+  { "id": "M02", "stage": "group", "group": "A", "date": "2026-06-11", "home": "KOR", "away": "CZE" },
+
+  { "id": "M03", "stage": "group", "group": "B", "date": "2026-06-12", "home": "CAN", "away": "BIH" },
+  { "id": "M04", "stage": "group", "group": "D", "date": "2026-06-12", "home": "USA", "away": "PAR" },
+
+  { "id": "M05", "stage": "group", "group": "B", "date": "2026-06-13", "home": "QAT", "away": "SUI" },
+  { "id": "M06", "stage": "group", "group": "C", "date": "2026-06-13", "home": "BRA", "away": "MAR" },
+  { "id": "M07", "stage": "group", "group": "D", "date": "2026-06-13", "home": "AUS", "away": "TUR" },
+
+  { "id": "M08", "stage": "group", "group": "F", "date": "2026-06-14", "home": "NED", "away": "JPN" },
+  { "id": "M09", "stage": "group", "group": "E", "date": "2026-06-14", "home": "CIV", "away": "ECU" },
+  { "id": "M10", "stage": "group", "group": "F", "date": "2026-06-14", "home": "SWE", "away": "TUN" },
+
+  { "id": "M11", "stage": "group", "group": "G", "date": "2026-06-15", "home": "BEL", "away": "EGY" },
+  { "id": "M12", "stage": "group", "group": "H", "date": "2026-06-15", "home": "KSA", "away": "URU" },
+  { "id": "M13", "stage": "group", "group": "G", "date": "2026-06-15", "home": "IRN", "away": "NZL" },
+
+  { "id": "M14", "stage": "group", "group": "I", "date": "2026-06-16", "home": "FRA", "away": "SEN" },
+  { "id": "M15", "stage": "group", "group": "I", "date": "2026-06-16", "home": "IRQ", "away": "NOR" },
+  { "id": "M16", "stage": "group", "group": "J", "date": "2026-06-16", "home": "ARG", "away": "ALG" },
+  { "id": "M17", "stage": "group", "group": "J", "date": "2026-06-16", "home": "AUT", "away": "JOR" },
+
+  { "id": "M18", "stage": "group", "group": "K", "date": "2026-06-17", "home": "POR", "away": "COD" },
+  { "id": "M19", "stage": "group", "group": "L", "date": "2026-06-17", "home": "ENG", "away": "CRO" },
+  { "id": "M20", "stage": "group", "group": "L", "date": "2026-06-17", "home": "GHA", "away": "PAN" },
+  { "id": "M21", "stage": "group", "group": "K", "date": "2026-06-17", "home": "UZB", "away": "COL" },
+
+  { "id": "M22", "stage": "group", "group": "A", "date": "2026-06-18", "home": "CZE", "away": "RSA" },
+  { "id": "M23", "stage": "group", "group": "B", "date": "2026-06-18", "home": "SUI", "away": "BIH" },
+  { "id": "M24", "stage": "group", "group": "B", "date": "2026-06-18", "home": "CAN", "away": "QAT" },
+  { "id": "M25", "stage": "group", "group": "A", "date": "2026-06-18", "home": "MEX", "away": "KOR" },
+
+  { "id": "M26", "stage": "group", "group": "D", "date": "2026-06-19", "home": "USA", "away": "AUS" },
+  { "id": "M27", "stage": "group", "group": "C", "date": "2026-06-19", "home": "SCO", "away": "MAR" },
+  { "id": "M28", "stage": "group", "group": "D", "date": "2026-06-19", "home": "TUR", "away": "PAR" },
+
+  { "id": "M29", "stage": "group", "group": "F", "date": "2026-06-20", "home": "NED", "away": "SWE" },
+  { "id": "M30", "stage": "group", "group": "E", "date": "2026-06-20", "home": "GER", "away": "CIV" },
+  { "id": "M31", "stage": "group", "group": "F", "date": "2026-06-20", "home": "TUN", "away": "JPN" },
+
+  { "id": "M32", "stage": "group", "group": "H", "date": "2026-06-21", "home": "ESP", "away": "KSA" },
+  { "id": "M33", "stage": "group", "group": "G", "date": "2026-06-21", "home": "BEL", "away": "IRN" },
+  { "id": "M34", "stage": "group", "group": "G", "date": "2026-06-21", "home": "NZL", "away": "EGY" },
+
+  { "id": "M35", "stage": "group", "group": "J", "date": "2026-06-22", "home": "ARG", "away": "AUT" },
+  { "id": "M36", "stage": "group", "group": "I", "date": "2026-06-22", "home": "FRA", "away": "IRQ" },
+  { "id": "M37", "stage": "group", "group": "I", "date": "2026-06-22", "home": "NOR", "away": "SEN" },
+  { "id": "M38", "stage": "group", "group": "J", "date": "2026-06-22", "home": "JOR", "away": "ALG" },
+
+  { "id": "M39", "stage": "group", "group": "K", "date": "2026-06-23", "home": "POR", "away": "UZB" },
+  { "id": "M40", "stage": "group", "group": "L", "date": "2026-06-23", "home": "ENG", "away": "GHA" },
+  { "id": "M41", "stage": "group", "group": "L", "date": "2026-06-23", "home": "PAN", "away": "CRO" },
+  { "id": "M42", "stage": "group", "group": "K", "date": "2026-06-23", "home": "COL", "away": "COD" },
+
+  { "id": "M43", "stage": "group", "group": "B", "date": "2026-06-24", "home": "SUI", "away": "CAN" },
+  { "id": "M44", "stage": "group", "group": "B", "date": "2026-06-24", "home": "BIH", "away": "QAT" },
+  { "id": "M45", "stage": "group", "group": "C", "date": "2026-06-24", "home": "SCO", "away": "BRA" },
+  { "id": "M46", "stage": "group", "group": "A", "date": "2026-06-24", "home": "CZE", "away": "MEX" },
+  { "id": "M47", "stage": "group", "group": "A", "date": "2026-06-24", "home": "RSA", "away": "KOR" },
+
+  { "id": "M48", "stage": "group", "group": "E", "date": "2026-06-25", "home": "ECU", "away": "GER" },
+  { "id": "M49", "stage": "group", "group": "F", "date": "2026-06-25", "home": "JPN", "away": "SWE" },
+  { "id": "M50", "stage": "group", "group": "F", "date": "2026-06-25", "home": "TUN", "away": "NED" },
+  { "id": "M51", "stage": "group", "group": "D", "date": "2026-06-25", "home": "TUR", "away": "USA" },
+  { "id": "M52", "stage": "group", "group": "D", "date": "2026-06-25", "home": "PAR", "away": "AUS" },
+
+  { "id": "M53", "stage": "group", "group": "I", "date": "2026-06-26", "home": "NOR", "away": "FRA" },
+  { "id": "M54", "stage": "group", "group": "I", "date": "2026-06-26", "home": "SEN", "away": "IRQ" },
+  { "id": "M55", "stage": "group", "group": "H", "date": "2026-06-26", "home": "URU", "away": "ESP" },
+  { "id": "M56", "stage": "group", "group": "G", "date": "2026-06-26", "home": "EGY", "away": "IRN" },
+  { "id": "M57", "stage": "group", "group": "G", "date": "2026-06-26", "home": "NZL", "away": "BEL" },
+
+  { "id": "M58", "stage": "group", "group": "L", "date": "2026-06-27", "home": "PAN", "away": "ENG" },
+  { "id": "M59", "stage": "group", "group": "L", "date": "2026-06-27", "home": "CRO", "away": "GHA" },
+  { "id": "M60", "stage": "group", "group": "K", "date": "2026-06-27", "home": "COL", "away": "POR" },
+  { "id": "M61", "stage": "group", "group": "K", "date": "2026-06-27", "home": "COD", "away": "UZB" },
+  { "id": "M62", "stage": "group", "group": "J", "date": "2026-06-27", "home": "ALG", "away": "AUT" },
+  { "id": "M63", "stage": "group", "group": "J", "date": "2026-06-27", "home": "JOR", "away": "ARG" }
+]
