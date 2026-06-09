@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------
 
 // The Web App /exec URL from Deploy ▸ Manage deployments.
-export const API_URL = 'https://script.google.com/macros/s/AKfycby30JlIxPfDM-zBK9U2GnVj1Rov1E9TbKMaLQilwW5VVCMzlpb2v4E5ZDoRnODJ0ljH8Q/exec';
+export const API_URL = 'https://script.google.com/macros/s/AKfycbxWFPIuBVnSde4X6GVubWx3TPw6c_bY-0N_OwXThwUcFf5rlCXm4EfWdFn5ZVch_7m15w/exec';
 
 // Folder (on this same GitHub Pages site) that serves the seed JSON files.
 // Used only by the one-time "Seed sheet" admin action. Example:
