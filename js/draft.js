@@ -18,20 +18,11 @@ export function renderDraft(state) {
   } else if (status === 'complete') {
     head += `<p class="banner done">Draft complete — all ${state.totalPicks} picks made.</p>`;
   } else if (onClock) {
+    const timer = state.pickStartedAt
+      ? `&nbsp;·&nbsp; ⏱ <span id="pick-timer" class="pick-timer"></span>` : '';
     head += `<p class="banner live">On the clock: <strong>${escapeHtml(onClock.playerName || '?')}</strong>
-      &nbsp;·&nbsp; Pick ${onClock.pickNumber}/${state.totalPicks} &nbsp;·&nbsp; Round ${onClock.round}</p>`;
+      &nbsp;·&nbsp; Pick ${onClock.pickNumber}/${state.totalPicks} &nbsp;·&nbsp; Round ${onClock.round}${timer}</p>`;
   }
-
-  // --- Admin controls ---
-  let controls = `<div class="admin-controls">`;
-  if (status === 'not_started') {
-    controls += `<button data-act="start">Start draft</button>`;
-  }
-  if (status === 'in_progress' || status === 'complete') {
-    controls += `<button data-act="undo">Undo last pick</button>`;
-  }
-  controls += `<button data-act="reset" class="danger">Reset draft</button>`;
-  controls += `</div>`;
 
   // --- Draft order (slots) ---
   const bySlot = state.participants.slice().sort((a, b) => Number(a.DraftSlot) - Number(b.DraftSlot));
@@ -88,7 +79,6 @@ export function renderDraft(state) {
 
   el.innerHTML = `
     ${head}
-    ${controls}
     <div class="draft-grid">
       <aside class="draft-side">
         <h3>Order</h3>
@@ -99,31 +89,17 @@ export function renderDraft(state) {
       <section class="board">${groupsHtml}</section>
     </div>`;
 
-  // --- Wiring ---
+  // --- Wiring (players pick their own team on their turn; start/undo/reset
+  // live in the Admin panel) ---
   el.addEventListener('click', async (e) => {
     const pickEl = e.target.closest('[data-pick]');
-    const actEl = e.target.closest('[data-act]');
+    if (!pickEl) return;
     try {
-      if (pickEl) {
-        const teamId = pickEl.getAttribute('data-pick');
-        const pw = ensurePassword();
-        if (!pw) return;
-        await api.makePick({ password: pw, playerId: currentPlayerId, teamId });
-        await refresh();
-      } else if (actEl) {
-        const act = actEl.getAttribute('data-act');
-        const pw = ensurePassword();
-        if (!pw) return;
-        if (act === 'start') {
-          await api.startDraft({ password: pw });
-        } else if (act === 'undo') {
-          await api.undoPick({ password: pw });
-        } else if (act === 'reset') {
-          if (!confirm('Reset the entire draft? All picks will be cleared.')) return;
-          await api.resetDraft({ password: pw });
-        }
-        await refresh();
-      }
+      const teamId = pickEl.getAttribute('data-pick');
+      const pw = ensurePassword();
+      if (!pw) return;
+      await api.makePick({ password: pw, playerId: currentPlayerId, teamId });
+      await refresh();
     } catch (err) {
       alert(err.message || String(err));
     }

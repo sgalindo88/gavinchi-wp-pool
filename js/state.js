@@ -54,6 +54,14 @@ export function ensurePassword() {
 }
 export function clearPassword() { sessionStorage.removeItem(PW_KEY); }
 
+// Admin-panel visibility is separate from the password (players share the
+// password to make picks). It "unlocks" only when the secret #admin route is
+// visited, and stays unlocked for this browser tab.
+const ADMIN_KEY = 'wc_admin_unlocked';
+export function adminUnlocked() { return sessionStorage.getItem(ADMIN_KEY) === '1'; }
+export function unlockAdmin() { sessionStorage.setItem(ADMIN_KEY, '1'); }
+export function lockAdmin() { sessionStorage.removeItem(ADMIN_KEY); }
+
 // --- Derived lookups ----------------------------------------------------------
 
 function decorate(data) {

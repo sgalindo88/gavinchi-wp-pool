@@ -51,9 +51,17 @@ export const API_URL = 'https://script.google.com/macros/s/AKfy…/exec';
 export const DATA_BASE_URL = 'https://<you>.github.io/<repo>/docs';
 ```
 
-## 5. Initialize from the app (Admin tab)
+## 5. Initialize from the app (Admin panel)
 
-Open your GitHub Pages site and go to the **Admin** tab:
+The **Admin panel is hidden** from regular players. To open it, visit the secret
+route — add `#admin` to your site URL and load it:
+
+```
+https://<you>.github.io/<repo>/#admin
+```
+
+Bookmark that. It stays unlocked for that browser tab (use **Hide admin** in the
+panel to lock it again). Players who never visit `#admin` never see it. Then:
 
 1. **Admin password** – type the password you want and click *Save*. The first
    *Seed* call sets this as the sheet's `adminPassword` (so pick it now and
@@ -65,11 +73,13 @@ Open your GitHub Pages site and go to the **Admin** tab:
 
 ## 6. Run the draft
 
-Go to the **Draft** tab → *Start draft*. The app shows who's on the clock in
-snake order. On a player's turn, click their team; teams from a group that
-player already owns are disabled. Picks sync to everyone within a few seconds
-(async-friendly). Use *Undo last pick* if the draft gets cornered, *Reset
-draft* to start over.
+From the **Admin panel** (`#admin`) → section 3 → *Start draft*. The **Draft**
+tab then shows who's on the clock in snake order, plus a **5-minute soft
+countdown** per pick (display only — nothing auto-picks when it hits zero). On a
+player's turn they click their team (entering the shared password the first
+time); teams from a group that player already owns are disabled. Picks sync to
+everyone within a few seconds (async-friendly). *Undo last pick* and *Reset
+draft* also live in the Admin panel — players can't trigger them.
 
 ## 7. During the tournament
 

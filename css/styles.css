@@ -67,6 +67,9 @@ input[type=number] { width: 52px; text-align: center; }
 .banner { padding: 10px 14px; border-radius: 8px; background: var(--panel2); }
 .banner.live { border-left: 4px solid var(--accent); }
 .banner.done { border-left: 4px solid var(--gold); }
+.pick-timer { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--gold); }
+.pick-timer.expired { color: var(--danger); }
+.pick-timer.expired::after { content: ' — time’s up'; font-weight: 400; font-size: 12px; }
 
 /* Leaderboard */
 table.standings { width: 100%; border-collapse: collapse; margin-top: 10px; }

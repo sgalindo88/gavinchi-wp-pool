@@ -26,6 +26,8 @@ var NUM_PLAYERS = 5;
 var TEAMS_PER_PLAYER = 9;
 var TOTAL_PICKS = NUM_PLAYERS * TEAMS_PER_PLAYER; // 45
 
+function nowMs() { return (new Date()).getTime(); }
+
 // ---------------------------------------------------------------------------
 // HTTP entry points
 // ---------------------------------------------------------------------------
@@ -111,6 +113,7 @@ function getState() {
     seeded: seeded,
     draftStatus: draftStatus,
     currentPickNumber: currentPickNumber,
+    pickStartedAt: Number(config.pickStartedAt || 0), // epoch ms; clock for current pick
     totalPicks: TOTAL_PICKS,
     teamsPerPlayer: TEAMS_PER_PLAYER,
     onClock: onClock,
@@ -177,6 +180,7 @@ function startDraft(params) {
   }
   setConfig('draftStatus', 'in_progress');
   setConfig('currentPickNumber', 1);
+  setConfig('pickStartedAt', nowMs()); // start the clock for pick #1
   return { ok: true, message: 'Draft started.' };
 }
 
@@ -185,6 +189,7 @@ function resetDraft(params) {
   clearDataRows(SHEETS.PICKS);
   setConfig('draftStatus', 'not_started');
   setConfig('currentPickNumber', 0);
+  setConfig('pickStartedAt', '');
   return { ok: true, message: 'Draft reset. Picks cleared.' };
 }
 
@@ -247,8 +252,10 @@ function makePick(params) {
     if (next > TOTAL_PICKS) {
       setConfig('currentPickNumber', TOTAL_PICKS + 1);
       setConfig('draftStatus', 'complete');
+      setConfig('pickStartedAt', '');
     } else {
       setConfig('currentPickNumber', next);
+      setConfig('pickStartedAt', nowMs()); // restart the clock for the next pick
     }
 
     return { ok: true, message: who.Name + ' drafted ' + team.Name + '.', pickNumber: pickNumber };
@@ -282,6 +289,7 @@ function undoPick(params) {
 
     setConfig('currentPickNumber', maxPick);
     setConfig('draftStatus', 'in_progress');
+    setConfig('pickStartedAt', nowMs()); // restart the clock for the restored pick
     return { ok: true, message: 'Undid pick #' + maxPick + '.', currentPickNumber: maxPick };
   } finally {
     lock.releaseLock();

@@ -13,3 +13,4 @@ export const DATA_BASE_URL = 'https://sgalindo88.github.io/gavinchi-wp-pool/docs
 export const NUM_PLAYERS = 5;
 export const TEAMS_PER_PLAYER = 9;
 export const POLL_MS = 5000;
+export const PICK_SECONDS = 300; // soft per-pick countdown (5 min, display only)
